@@ -19,13 +19,19 @@ public class Seq extends BinaryExpr {
 
     @Override
     public TypeResult typecheck(TypeEnv E) throws TypeError {
-        // TODO
-        return null;
+        // TODO - ed
+    	TypeResult trl = l.typecheck(E);
+    	TypeResult trr = r.typecheck(trl.s.compose(E));
+    	
+        return TypeResult.of(trr.s.compose(trl.s), trr.t);
     }
 
     @Override
     public Value eval(State s) throws RuntimeError {
-        // TODO
-        return null;
+        // TODO - ed
+        Value vl = l.eval(s);
+        Value vr = r.eval(s);
+        
+        return vr;
     }
 }

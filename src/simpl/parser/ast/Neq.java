@@ -17,7 +17,16 @@ public class Neq extends EqExpr {
 
     @Override
     public Value eval(State s) throws RuntimeError {
-        // TODO
-        return null;
+        // TODO - ed
+    	Value lvalue = this.l.eval(s);
+    	Value rvalue = this.r.eval(s);
+    	// if(!(lvalue.isEqual) || !(rvalue instanceof IntValue)) throw new RuntimeError("runtime error eq");
+    	boolean retbool = lvalue.equals(rvalue);
+    	
+    	//System.err.println("NEQ:" + lvalue + " @ " + rvalue);
+    	
+    	BoolValue retvalue = new BoolValue(!retbool);
+    	
+        return retvalue;
     }
 }

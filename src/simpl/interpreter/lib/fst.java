@@ -8,14 +8,31 @@ import simpl.interpreter.State;
 import simpl.interpreter.Value;
 import simpl.parser.Symbol;
 import simpl.parser.ast.Expr;
+import simpl.typing.ArrowType;
 import simpl.typing.TypeEnv;
 import simpl.typing.TypeError;
 import simpl.typing.TypeResult;
 
 public class fst extends FunValue {
-
+	
+	private static Symbol fst = Symbol.symbol("fst");
+	
+	
     public fst() {
         // TODO
-        super(null, null, null);
+    	super(Env.empty, Symbol.symbol("x"), new Expr() {
+            @Override
+            public TypeResult typecheck(TypeEnv E) throws TypeError {
+                return TypeResult.of(((ArrowType) (E.get(fst))).t2);
+            }
+
+            @Override
+            public Value eval(State s) throws RuntimeError {
+                return ((PairValue) s.E.get(Symbol.symbol("x"))).v1;
+            }
+        });
+        //super(null, null, null);
     }
+    
+    
 }

@@ -24,13 +24,30 @@ public class Deref extends UnaryExpr {
 
     @Override
     public TypeResult typecheck(TypeEnv E) throws TypeError {
-        // TODO
-        return null;
+        // TODO - ed
+    	TypeResult tre = e.typecheck(E);
+    	
+        TypeVar t = new TypeVar(true);
+        
+        RefType myref = new RefType(t);
+        
+        Substitution sofar = tre.s;
+        
+        sofar = tre.t.unify(myref).compose(sofar);
+        
+        return TypeResult.of(sofar, sofar.apply(t));
     }
 
     @Override
     public Value eval(State s) throws RuntimeError {
-        // TODO
-        return null;
+        // TODO - ed
+        Value v = e.eval(s);
+        if(!(v instanceof RefValue)) throw new RuntimeError("runtime error deref1");
+        RefValue rv = (RefValue)v;
+        if(s.M.containsKey(rv.p)) {
+        	return s.M.get(rv.p);
+        } else {
+        	throw new RuntimeError("runtime error deref2");
+        }
     }
 }

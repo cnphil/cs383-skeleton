@@ -10,6 +10,10 @@ public abstract class Substitution {
         public Type apply(Type t) {
             return t;
         }
+        
+        /*public String toString() {
+        	return "";
+        }*/
     }
 
     private static final class Replace extends Substitution {
@@ -20,6 +24,10 @@ public abstract class Substitution {
             this.a = a;
             this.t = t;
         }
+        
+        /*public String toString() {
+        	return a + "/" + t;
+        }*/
 
         public Type apply(Type b) {
             return b.replace(a, t);
@@ -33,6 +41,10 @@ public abstract class Substitution {
             this.f = f;
             this.g = g;
         }
+        
+        /*public String toString() {
+        	return f + "; " + g;
+        }*/
 
         public Type apply(Type t) {
             return f.apply(g.apply(t));

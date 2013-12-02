@@ -31,12 +31,13 @@ public class Env {
     }
 
     public Value get(Symbol y) {
-        // TODO
-        return null;
+        // TODO - ed
+    	if(x == y) return v;
+    	else return this.E.get(y);
     }
 
     public Env clone() {
-        // TODO
-        return null;
+        // TODO - ed
+        return new Env(this.E.clone(), x, v);
     }
 }

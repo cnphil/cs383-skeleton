@@ -17,7 +17,12 @@ public class Mul extends ArithExpr {
 
     @Override
     public Value eval(State s) throws RuntimeError {
-        // TODO
-        return null;
+        // TODO - ed
+    	Value lvalue = this.l.eval(s);
+    	Value rvalue = this.r.eval(s);
+    	if(!(lvalue instanceof IntValue) || !(rvalue instanceof IntValue)) throw new RuntimeError("runtime error mul");
+    	IntValue retvalue = new IntValue(((IntValue)lvalue).n * ((IntValue)rvalue).n);
+    	
+        return retvalue;
     }
 }

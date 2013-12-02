@@ -8,14 +8,29 @@ import simpl.interpreter.State;
 import simpl.interpreter.Value;
 import simpl.parser.Symbol;
 import simpl.parser.ast.Expr;
+import simpl.typing.ArrowType;
 import simpl.typing.TypeEnv;
 import simpl.typing.TypeError;
 import simpl.typing.TypeResult;
 
 public class tl extends FunValue {
 
+	private static Symbol tl = Symbol.symbol("tl");
+	
+	
     public tl() {
         // TODO
-        super(null, null, null);
+    	super(Env.empty, Symbol.symbol("x"), new Expr() {
+            @Override
+            public TypeResult typecheck(TypeEnv E) throws TypeError {
+                return TypeResult.of(((ArrowType) (E.get(tl))).t2);
+            }
+
+            @Override
+            public Value eval(State s) throws RuntimeError {
+                return ((ConsValue) s.E.get(Symbol.symbol("x"))).v2;
+            }
+        });
+        //super(null, null, null);
     }
 }

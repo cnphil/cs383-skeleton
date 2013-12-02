@@ -26,13 +26,28 @@ public class Let extends Expr {
 
     @Override
     public TypeResult typecheck(TypeEnv E) throws TypeError {
-        // TODO
-        return null;
+        // TODO - ed
+    	
+    	TypeResult tr1 = e1.typecheck(E);
+    	
+        E = TypeEnv.of(E, x, tr1.t);
+        
+        TypeResult tr2 = e2.typecheck(E);
+        
+        //System.err.println("Let: " + E);
+        //System.err.println("Let: " + tr2.s.compose(tr1.s));
+        
+        return TypeResult.of(tr2.s.compose(tr1.s), tr2.t);
+        
     }
 
     @Override
     public Value eval(State s) throws RuntimeError {
-        // TODO
-        return null;
+        // TODO - ed
+    	Value v1 = e1.eval(s);
+    	s = State.of(new Env(s.E, x, v1), s.M, s.p);
+    	Value v2 = e2.eval(s);
+    	
+        return v2;
     }
 }
